@@ -1,19 +1,11 @@
 import Link from "next/link";
-import { useState } from "react";
 import { CiMail } from "react-icons/ci";
 import { GoLock } from "react-icons/go";
-import { IoEyeOutline } from "react-icons/io5";
-import { IoEyeOffOutline } from "react-icons/io5";
 import { FiGithub } from "react-icons/fi";
 import { PiGoogleChromeLogo } from "react-icons/pi";
+import CustomInput from "../CustomInput";
 
 export default function LoginForm(){
-
-    const [showPassword, setShowPassword] = useState(false);
-
-    function handleShowPassword(){
-        setShowPassword(!showPassword);
-    }
 
     return (
         <div className="w-full max-w-md mx-auto">
@@ -30,52 +22,20 @@ export default function LoginForm(){
                 </div>
                 <div className="pt-0 p-6 space-y-6">
                     <form onSubmit={() => {}} className="space-y-4">
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium text-[#F1F2F3]">
-                                Email
-                            </label>
-                            <div className="relative">
-                                <CiMail 
-                                    className="absolute text-gray-400 left-3 top-1/2 transform -translate-y-1/2" 
-                                    size={20}
-                                />
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    placeholder="seu@email.com"
-                                    required
-                                    className="bg-[#21252b80] border border-[#2c313a]/50
-                                    focus:border-[#5593f7] outline-none rounded-md py-2 w-full
-                                    placeholder:text-gray-500 text-[#F1F2F3] pl-10"
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="password" className="text-sm font-medium text-[#F1F2F3]">
-                                Senha
-                            </label>
-                            <div className="relative">
-                                <GoLock 
-                                    className="absolute text-gray-400 left-3 top-1/2 transform -translate-y-1/2" 
-                                    size={20}
-                                />
-                                <input 
-                                    type={showPassword ? "text" : "password"} 
-                                    id="password" 
-                                    placeholder="********"
-                                    required
-                                    className="bg-[#21252b80] border border-[#2c313a]/50
-                                    focus:border-[#5593f7] outline-none rounded-md py-2 w-full
-                                    placeholder:text-gray-500 text-[#F1F2F3] px-10"
-                                />
-                                <div 
-                                onClick={handleShowPassword}
-                                className="absolute text-gray-400 right-3 top-1/2 transform -translate-y-1/2 
-                                text-[20px] cursor-pointer hover:text-white transition-colors">
-                                    {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
-                                </div>
-                            </div>
-                        </div>
+                        <CustomInput 
+                            label="Email"
+                            type="email"
+                            placeholder="seu@email.com"
+                            required={true}
+                            icon={<CiMail />}
+                        />
+                        <CustomInput
+                            label="Senha"
+                            type="password"
+                            placeholder="•••••••••"
+                            required={true}
+                            icon={<GoLock />}
+                        />
                         <div className="flex items-center justify-between">
                             <label className="flex items-center gap-2 text-sm">
                                 <input 
