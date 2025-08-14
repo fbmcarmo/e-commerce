@@ -37,15 +37,17 @@ export default function CustomInput({ label, icon, type, placeholder, required }
                 placeholder={placeholder}
                 required={required}
                 className={`
-                ${
-                    icon && type === "password" && "px-10" ||
-                    icon && type !== "password" && "pl-10" ||
-                    !icon && type !== "password" && "px-3" ||
-                    !icon && type === "password" && "pr-10"
-                }
-                bg-[#21252b80] border border-[#2c313a]/50
-                focus:border-[#5593f7] outline-none rounded-md py-2 w-full
-                placeholder:text-gray-500 text-[#F1F2F3]`}
+                    ${label && "mt-2"}
+                    ${
+                        icon && type === "password" && "px-10" ||
+                        icon && type !== "password" && "pl-10" ||
+                        !icon && type !== "password" && "px-3" ||
+                        !icon && type === "password" && "pr-10"
+                    }
+                    bg-[#21252b80] border border-[#2c313a]/50
+                    focus:border-[#5593f7] outline-none rounded-md py-2 w-full
+                    placeholder:text-gray-500 text-[#F1F2F3]
+                `}
             />
             {type === "password" && (
                 <div 
