@@ -84,7 +84,7 @@ export default function RegisterForm(){
                     <div className="text-center mt-6 flex items-center justify-center gap-2">
                         <p className="text-sm text-gray-400">Já tem uma conta?</p>
                         <Link
-                            href="/"
+                            href="/login"
                             className="text-sm text-[#5593f7] hover:text-[#5593f7]/80
                              transition-colors"
                         >
