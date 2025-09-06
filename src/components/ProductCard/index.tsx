@@ -5,6 +5,7 @@ import CustomButton from "../CustomButton";
 import { CiHeart } from "react-icons/ci";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
+import formatCurrency from "@/helpers/formatCurrency";
 
 interface ProductCardProps {
     product: Product;
@@ -83,7 +84,17 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 )
                             })}
                         </div>
-                        <span className="text-xs">({product.reviews})</span>
+                        <span className="text-xs">&nbsp;({product.reviews})&nbsp;</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-[#5593f7]">
+                            {formatCurrency(product.price)}
+                        </span>
+                        {product.originalPrice && (
+                            <span className="text-sm line-through">
+                                {formatCurrency(product.originalPrice)}
+                            </span>
+                        )}
                     </div>
                 </div>
             </div>
