@@ -6,6 +6,7 @@ import { CiHeart } from "react-icons/ci";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 import formatCurrency from "@/helpers/formatCurrency";
+import StarsRating from "../StarsRating";
 
 interface ProductCardProps {
     product: Product;
@@ -70,22 +71,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                         {product.name}
                     </h3>
 
-                    <div className="flex items-center gap-1">
-                        <div className="flex items-center">
-                            {[...Array(5)].map((_, index) => {
-                                return (
-                                    <FaStar 
-                                        key={index}
-                                        size={12}
-                                        className={`
-                                            ${index < Math.floor(product.rating) ? "fill-yellow-500" : ""}
-                                        `}
-                                    />
-                                )
-                            })}
-                        </div>
-                        <span className="text-xs">&nbsp;({product.reviews})&nbsp;</span>
-                    </div>
+                    <StarsRating 
+                        rating={product.rating}
+                        reviews={product.reviews}
+                    />
+
                     <div className="flex items-center gap-2">
                         <span className="text-lg font-bold text-[#5593f7]">
                             {formatCurrency(product.price)}

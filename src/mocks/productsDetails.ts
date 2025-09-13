@@ -11,6 +11,7 @@ export const productsDetailsMocks = [
       ],
       rating: 4.8,
       reviews: 1250,
+      discount: 10,
       category: "Smartphones",
       isNew: true,
       description: "O iPhone 15 Pro Max em Titânio Natural combina elegância e resistência em um design extraordinário. Com o chip A17 Pro e sistema de câmeras profissional, oferece performance excepcional para todas as suas necessidades.",
