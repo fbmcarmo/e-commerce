@@ -8,6 +8,9 @@ import { FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
 import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { LuShare2 } from "react-icons/lu";
+import { BsTruck } from "react-icons/bs";
+import { MdOutlineShield } from "react-icons/md";
+import { RiResetLeftFill } from "react-icons/ri";
 
 interface ProductInfoProps {
   product: ProductDetails;
@@ -16,6 +19,12 @@ interface ProductInfoProps {
 export default function ProductInfo({ product }: ProductInfoProps) {
 
   const [quantity, setQuantity] = useState(1)
+
+  const shippingInfos = [
+    {value: product?.shipping, color: "green", icon: <BsTruck />},
+    {value: product?.warranty, color: "blue", icon: <MdOutlineShield />},
+    {value: product?.return, color: "orange", icon: <RiResetLeftFill />}
+  ]
     
   return (
     <div className="space-y-6">
@@ -111,6 +120,28 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 <LuShare2 size={20} />
             </CustomButton>
         </div>
+        <CustomButton
+          className="h-[45px]"
+          variant="secondary"
+        >
+           Comprar agora
+        </CustomButton>
+      </div>
+      <div className="space-y-3 pt-4 border-t border-[#2c313a]/50">
+          {shippingInfos.map((info, index) => {
+            return (
+              <div className="flex items-center gap-3 text-sm" key={index}>
+                  <div className={`
+                        ${info.color == "green" && "text-green-600"}
+                        ${info.color == "blue" && "text-blue-600"}
+                        ${info.color == "orange" && "text-orange-600"}
+                    `}>
+                    {info.icon}
+                  </div>
+                  <span>{info.value}</span>
+              </div>
+            )
+          })}
       </div>
     </div>
   );
