@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import CustomButton from "../CustomButton";
-import { productsMocks } from "@/mocks/products";
 import { Product } from "@/interfaces/products";
 import ProductCard from "../ProductCard";
+import requestApi from "@/helpers/requestApi";
 
 export default function ProductsSection() {
     const [products, setProducts] = useState<Product[]>([])
 
     useEffect(() => {
         async function fetchProducts(){
-            setProducts(productsMocks)
+
+            const response = await requestApi({
+                url: "/products",
+                method: "GET"
+            })
+
+            setProducts(response.data)
         }
 
         fetchProducts()

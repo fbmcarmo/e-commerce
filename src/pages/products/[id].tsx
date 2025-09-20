@@ -2,13 +2,13 @@ import Breadcrumb from "@/components/Breadcrumb";
 import PageWrapper from "@/components/PageWrapper";
 import ProductImages from "@/components/ProductImages";
 import ProductInfo from "@/components/ProductInfo";
-import Skeleton from "@/components/Skeleton";
 import ProductSkeleton from "@/components/Skeletons/ProductSkeletonPage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import getProductMock from "@/helpers/getProductMock";
+import requestApi from "@/helpers/requestApi";
 import { ProductDetails } from "@/interfaces/productDetails";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ProductPage(){
     const router = useRouter();
@@ -20,15 +20,22 @@ export default function ProductPage(){
         async function fetchProduct(){
             setLoading(true)
 
-            if(id){
-                const product = getProductMock({ id: Number(id) })
+            try {
+                if(!id) return
 
-                if(product){
-                    setProduct(product)
-                }
+                const response = await requestApi({
+                    url: `/products/${id}`,
+                    method: "GET"
+                })
+
+                setProduct(response.data)
+            } catch (error) {
+                console.error(error)
+                toast.error("Erro ao buscar produto")
+            } finally {
+                setLoading(false)
             }
 
-            setLoading(false)
         }
 
         fetchProduct()
@@ -69,7 +76,7 @@ export default function ProductPage(){
                                 <div className="p-6">
                                     <h3 className="text-lg font-semibold mb-4">Características Principais</h3>
                                     <ul className="space-y-2">
-                                        {product?.features.map((feature, index) => {
+                                        {product?.features?.map((feature, index) => {
                                             return (
                                                 <li className="flex items-center gap-2" key={index}>
                                                     <div className="w-2 h-2 rounded-full bg-[#5593f7]"></div>
@@ -83,7 +90,25 @@ export default function ProductPage(){
                         </TabsContent>
 
                         <TabsContent value="specifications">
-                            <p>Aqui é as Especificações</p>
+                            <div className="rounded-lg border border-[#343942] bg-[#181b20]">
+                                <div className="p-6">
+                                    <h3 className="text-lg font-semibold mb-4">
+                                        Especificações Técnicas
+                                    </h3>
+                                    <div className="space-y-3">
+                                        {
+                                            Object.entries(product?.specifications || {}).map(([key, value]) => {
+                                                return (
+                                                    <div key={key} className="flex justify-between py-2 border-b border-[#2c313a]/50">
+                                                        <span className="font-medium">{key}</span>
+                                                        <span className="text-gray-400">{value}</span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </TabsContent>
 
                         <TabsContent value="reviews">
