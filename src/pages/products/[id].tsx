@@ -1,19 +1,23 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import CustomButton from "@/components/CustomButton";
 import PageWrapper from "@/components/PageWrapper";
 import ProductImages from "@/components/ProductImages";
 import ProductInfo from "@/components/ProductInfo";
+import ProductReviews from "@/components/ProductReviews";
 import ProductSkeleton from "@/components/Skeletons/ProductSkeletonPage";
+import StarsRating from "@/components/StarsRating";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import customToast from "@/helpers/customToast";
 import requestApi from "@/helpers/requestApi";
 import { ProductDetails } from "@/interfaces/productDetails";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 export default function ProductPage(){
     const router = useRouter();
     const { id } = router.query;
-    const [product, setProduct] = useState<ProductDetails>({} as ProductDetails);
+    const [product, setProduct] = useState<ProductDetails | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,7 +35,9 @@ export default function ProductPage(){
                 setProduct(response.data)
             } catch (error) {
                 console.error(error)
-                toast.error("Erro ao buscar produto")
+                customToast.error({
+                    message: "Erro ao buscar produto"
+                })
             } finally {
                 setLoading(false)
             }
@@ -40,6 +46,25 @@ export default function ProductPage(){
 
         fetchProduct()
     }, [id])
+
+    if(!product){
+        return (
+            <PageWrapper>
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-2xl font-bold mb-4">
+                        Produto não encontrado
+                    </h1>
+                    <Link href="/">
+                        <CustomButton
+                            className="h-[45px] px-4"
+                        >
+                            Voltar para a home
+                        </CustomButton>
+                    </Link>
+                </div>
+            </PageWrapper>
+        )
+    }
 
     return (
         <PageWrapper>
@@ -112,7 +137,22 @@ export default function ProductPage(){
                         </TabsContent>
 
                         <TabsContent value="reviews">
-                            <p>Aqui é as Avaliações</p>
+                            <div className="rounded-lg border border-[#343942]
+                             bg-[#181B20] shadow-md">
+                                <div className="p-6">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <h3 className="text-lg font-semibold">
+                                            Avaliações dos clientes
+                                        </h3>
+                                        <StarsRating
+                                            rating={product?.rating}
+                                            reviews={product?.reviews}
+                                            size={16}
+                                        />
+                                    </div>
+                                    <ProductReviews id={product?.id} />
+                                </div>
+                            </div>
                         </TabsContent>
                     </Tabs>
                 </>
