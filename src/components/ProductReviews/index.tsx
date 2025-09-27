@@ -2,6 +2,7 @@ import getProductReviewsMock from "@/helpers/getProductReviewsMock";
 import { Review } from "@/interfaces/review";
 import { useEffect, useState } from "react";
 import StarsRating from "../StarsRating";
+import Image from "next/image";
 
 interface ProductReviewsProps {
     id: number;
@@ -36,6 +37,24 @@ export default function ProductReviews({ id }: ProductReviewsProps){
                             <span className="text-xs text-gray-400">
                                 {review.timestamp}
                             </span>
+                        </div>
+                        <p className="text-sm text-gray-400 mb-3">
+                            {review.comment}
+                        </p>
+                        <div className="flex gap-2 mb-2">
+                            {review?.images?.map((image, index) => {
+                                return (
+                                    <Image 
+                                        key={index}
+                                        src={image}
+                                        alt="Review Image"
+                                        width={1000}
+                                        height={1000}
+                                        className="w-16 h-16 rounded-md object-cover 
+                                        hover:opacity-80 transition-opacity"
+                                    />
+                                )
+                            })}
                         </div>
                     </li>
                 )

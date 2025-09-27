@@ -7,14 +7,24 @@ import { FiShoppingCart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 import formatCurrency from "@/helpers/formatCurrency";
 import StarsRating from "../StarsRating";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
     product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+
+    const router = useRouter()
+
+    function handleClick(){
+        router.push(`/products/${product.id}`)
+    }
+
     return (
-        <div className="group overflow-hidden hover:shadow-lg transition-all
+        <div 
+        onClick={handleClick}
+        className="group overflow-hidden hover:shadow-lg transition-all
         duration-300 backdrop-blur-lg bg-[#181c22] rounded-lg">
             <div className="relative aspect-square overflow-hidden">
                 <Image
