@@ -4,8 +4,17 @@ import { GoLock } from "react-icons/go";
 import { FiGithub } from "react-icons/fi";
 import { PiGoogleChromeLogo } from "react-icons/pi";
 import CustomInput from "../CustomInput";
+import { useState } from "react";
 
 export default function LoginForm(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        alert("Login executado!")
+    }
 
     return (
         <div className="w-full max-w-md mx-auto">
@@ -21,12 +30,14 @@ export default function LoginForm(){
                     </p>
                 </div>
                 <div className="pt-0 p-6 space-y-6">
-                    <form onSubmit={() => {}} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <CustomInput 
                             label="Email"
                             type="email"
                             placeholder="seu@email.com"
                             required={true}
+                            value={email}
+                            onChange={event => setEmail(event.target.value)}
                             icon={<CiMail />}
                         />
                         <CustomInput
@@ -34,6 +45,8 @@ export default function LoginForm(){
                             type="password"
                             placeholder="•••••••••"
                             required={true}
+                            value={password}
+                            onChange={event => setPassword(event.target.value)}
                             icon={<GoLock />}
                         />
                         <div className="flex items-center justify-between">
