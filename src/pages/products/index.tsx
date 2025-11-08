@@ -3,6 +3,7 @@ import CustomInput from "@/components/CustomInput";
 import { PageWrapper } from "@/components/PageWrapper";
 import ProductsSection from "@/components/ProductsSection";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { withAuth } from "@/lib/withAuth";
 import { IoSearch } from "react-icons/io5";
 
 export default function ProductsPage(){
@@ -44,3 +45,5 @@ export default function ProductsPage(){
         </PageWrapper.Root>
     )
 }
+
+export const getServerSideProps = withAuth()

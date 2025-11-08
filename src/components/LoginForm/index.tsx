@@ -5,15 +5,45 @@ import { FiGithub } from "react-icons/fi";
 import { PiGoogleChromeLogo } from "react-icons/pi";
 import CustomInput from "../CustomInput";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
+import customToast from "@/helpers/customToast";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        alert("Login executado!")
+        try {
+            const result = await signIn("credentials", {
+                email,
+                password,
+                redirect: false
+            })
+
+            if(result?.error){
+                customToast.error({
+                    message: "Erro ao fazer login"
+                })
+            }
+
+            if(result?.ok){
+                customToast.success({
+                    message: "Login realizado com sucesso"
+                })
+
+                router.push("/")
+            }
+
+        } catch (error) {
+            console.error(error)
+            customToast.error({
+                message: "Ocorreu um erro inesperado. Tente novamente"
+            })
+        }
     }
 
     return (
