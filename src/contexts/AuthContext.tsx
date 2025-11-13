@@ -5,6 +5,7 @@ interface User {
     id: string;
     email: string;
     name: string;
+    image?: string;
 }
 
 interface AuthContextType {
@@ -30,7 +31,8 @@ export function AuthProvider({ children }: {children: React.ReactNode}){
         user: session?.user ? {
             id: session.user.id,
             email: session.user.email!,
-            name: session.user.name!
+            name: session.user.name!,
+            image: session.user.image!
         } : null,
         isAuthenticated: !!session,
         isLoading: status === "loading",
