@@ -1,14 +1,25 @@
 import { cn } from "@/lib/utils";
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { useCookies } from "react-cookie";
 
 export function AdminSidebar() {
-  const [open, setOpen] = useState(false);
   const { user } = useAuth()
+  const [cookies, setCookies] = useCookies(["sidebar"])
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    setOpen(cookies.sidebar)
+  }, [])
+
+  function handleSwitchSidebar(){
+    setCookies("sidebar", open ? "false" : "true")
+    setOpen(!open)
+  }
 
   return (
     <aside
@@ -56,7 +67,7 @@ export function AdminSidebar() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setOpen(!open)}
+            onClick={() => handleSwitchSidebar()}
             className={open ? "h-8 w-8" : "h-7 w-7"}
           >
             {open ? <LuChevronLeft /> : <LuChevronRight />}
