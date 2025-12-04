@@ -5,20 +5,17 @@ import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setSidebarValue } from "@/redux/reducers/sidebarValueSlice";
 
 export function AdminSidebar() {
   const { user } = useAuth()
-  const [cookies, setCookies] = useCookies(["sidebar"])
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    setOpen(cookies.sidebar)
-  }, [])
+  const open = useSelector((state: RootState) => state.sidebarValue.open)
+  const dispatch = useDispatch()
 
   function handleSwitchSidebar(){
-    setCookies("sidebar", open ? "false" : "true")
-    setOpen(!open)
+      dispatch(setSidebarValue(!open))
   }
 
   return (
