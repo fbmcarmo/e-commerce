@@ -34,8 +34,13 @@ export const authOptions: NextAuthOptions = {
                     }
 
                     return null;
-                } catch (error) {
+                } catch (error: any) {
                     console.error(error);
+
+                    if(error?.response?.data?.code == "4002"){
+                        throw new Error(JSON.stringify(error?.response?.data));
+                    }
+
                     return null;
                 }
             }

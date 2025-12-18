@@ -24,6 +24,12 @@ export default function LoginForm(){
                 redirect: false
             })
 
+            const error = JSON.parse(result?.error || "{}")
+
+            if(error?.code == "4002"){
+                router.push(`/verify-email?token=${error?.id}`)
+            }
+
             if(result?.error){
                 customToast.error({
                     message: "Erro ao fazer login"
