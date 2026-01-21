@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: e-commerce-app
+    ports:
+      - 4000:4000
+    #USANDO .ENV
+    env_file:
+      - .env.local
+    restart: always 
